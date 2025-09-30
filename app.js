@@ -192,16 +192,23 @@ console.log('Eliminar contacto id:', id);
 // Agregar un nuevo contacto
 app.post('/api/contactos', async (req, res) => {
   const { Nombre, Cargo, Telefono, Ciudad, Imagen } = req.body;
+
   if (!Nombre || !Cargo || !Telefono || !Ciudad) {
     return res.status(400).json({ success: false, message: 'Datos incompletos' });
+  }
+
+  const usuarioId = req.session.usuario?.Id_Usuario;
+  if (!usuarioId) {
+    return res.status(401).json({ success: false, message: 'No autenticado' });
   }
 
   let connection;
   try {
     connection = await mysql.createConnection(db);
     const [result] = await connection.execute(
-      `INSERT INTO contactos (Nombre, Cargo, Telefono, Ciudad, Imagen) VALUES (?, ?, ?, ?, ?)`,
-      [Nombre, Cargo, Telefono, Ciudad, Imagen || '']
+      `INSERT INTO contactos (Nombre, Cargo, Telefono, Ciudad, Imagen, usuario_id) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [Nombre, Cargo, Telefono, Ciudad, Imagen || '', usuarioId]
     );
 
     res.status(201).json({ 
