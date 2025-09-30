@@ -7,7 +7,7 @@ const path = require('path');
 const cors = require('cors');
 
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://directoriotelefonico.vercel.app',
     credentials: true
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,10 +24,10 @@ app.use(session({
 
 //Configuracion base de datos
 const db = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'directorio'
+  host: 'mysql-valerin.alwaysdata.net',
+  user: 'valerin_bonilla',
+  password: 'Valerin1229*.',
+  database: 'valerin_directorio'
 };
 const handleDbError = (error, res) => {
   console.error('Error de base de datos:', error);
