@@ -199,7 +199,7 @@ app.post('/api/contactos', async (req, res) => {
   let connection;
   try {
     connection = await mysql.createConnection(db);
-    const [result] = await connection.execute(
+    await connection.execute(
       `INSERT INTO contactos (Nombre, Cargo, Telefono, Ciudad, Imagen) VALUES (?, ?, ?, ?, ?)`,
       [Nombre, Cargo, Telefono, Ciudad, Imagen || '']
     );
